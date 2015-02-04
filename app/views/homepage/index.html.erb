@@ -26,7 +26,8 @@
 			<h2> Item list </h2>
 		</div>
 		<div class="row">
-		<% @all_items.each do |t| %>
+		<% for i in 0..@all_items.length-1 %>
+			<% t = @all_items[i] %>
 			<div class="col-sm-4" id="tempItem" name="<%= t.name %>" info="<%= t.description %>" price ="<%= t.price %>">		
 				Name: <%= t.name %><br>
 				Info: <%= t.description %><br>
@@ -62,18 +63,57 @@
 		        <div class="modal-header">
 		          <h4 class="modal-title" id="Title">Your Cart</h4>
 		        </div>
-		        <% @cart_items.each do |t| %>
+		        <% if @cart_items ==nil %>
+		         nil
+		         <% else %>
+		        <% for i in 0..@cart_items.length-1  %>
+		        	<% cartitem = @cart_items[i] %>
+		        	<% item = @cart_items_data[i] %>
 			        <div class="modal-body">
-			          Name: <%= t.id %><br>
-			          Quantity: <%= t.quantity %><br>
+			          Name: <%= item.name %><br>
+			          Quantity: <%= cartitem.quantity %><br>
 			        </div>
+
 		        <% end %>
+		        <%end%>
 		        	<div class="modal-body">
 			          Total: <%= @total_price %><br>
 			        </div>
 		        <div class="modal-footer">
-		        	<button type="button" class="btn btn-primary" data-dismiss="modal">Checkout</button>
+		        	 <%= button_to "Clear Cart",  {controller: "home", action:  "clearcart"}, {class: 'btn btn-primary'}%>
+					<%= button_to "Checkout",  {controller: "home", action:  "clearcart"}, {class: 'btn btn-primary', "onclick" => "func()"}%>
 		          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+
+		  <script>
+		  function func(){
+		  	// $('#payment').modal("show");
+		  	prompt("Input credit card number:","");
+		  }
+		  </script>
+
+
+		   <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="mylabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="Title">Check out item</h4>
+		        </div>
+		     
+
+			        <div class="modal-body">
+			        	<div class="form-group">
+					      <label for="ccn">Credit card number:</label>
+					      <input type="text" class="form-control" id="ccn">
+					    </div>
+			        </div>
+
+		 
+		        <div class="modal-footer">
+		        	 <%= button_to "Enter",  {controller: "home", action:  "clearcart"}, {class: 'btn btn-primary'}%>
 		        </div>
 		      </div>
 		    </div>

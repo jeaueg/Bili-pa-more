@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
   #devise_for :users
-  root "homepage#index"
+  root "home#index"
   post '/addtocart' => 'home#addtocart'
+  post '/clearcart' => 'home#clearcart'
 
   devise_for :users, controllers: { sessions: "users/sessions" }
   # root :to => 'home#index'  

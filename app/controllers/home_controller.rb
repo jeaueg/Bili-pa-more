@@ -11,6 +11,37 @@ class HomeController < ApplicationController
     	reloadvariables
 	end
 
+	def getAllItems
+		@all_items = Item.all()
+		return @all_items
+	end
+
+
+	def getCart
+		cart = Cart.find_by(user_id: current_user.id)
+		@cart_items = CartItem.where(cart_id: cart.id)
+		# @user_cart_items = Array.new(cart_items.size)
+		# for i in 0..cart_items.size-1
+		# 	@user_cart_items[i] = CartItem.where()
+		@total_price=0
+		# for i in 0..@cart_items.size-1
+		# 	product_cost = Item.find_by(id: @cart_items[i].item_id)
+		# end
+		@cart_items_data = Array.new(@cart_items.size)
+		for i in 0..@cart_items.length-1
+			@cart_items_data[i] = Item.find_by(id: @cart_items[i].item_id)
+			if @cart_items_data[i] == nil
+				logger.info "AWWWWWWWWWWWW"
+				logger.info @cart_items[i].id
+				logger.info "AWWWWWWWWWWWW"
+			else
+				@total_price= (@total_price + (@cart_items[i].quantity* (@cart_items_data[i].price)))
+			end
+		end
+
+		return @user_cart_items,@cart_items_data,@total_price
+	end
+
 	def addtocart
 		logger.info "index!!!!!!!"
 
@@ -30,8 +61,19 @@ class HomeController < ApplicationController
 		# item = Item.find_by(id:params[:item_id])
 		# item.update(qty:item.qty-1)
 
+		redirect_to :back
+		# reloadvariables
+	end
 
-		reloadvariables
+	def clearcart
+		cart = Cart.find_by(user_id: current_user.id)
+		cart_items = CartItem.where(cart_id:cart.id)
+		cart_items.each do |c|
+			# item = Item.find_by(id:c.item_id)
+			# item.update(qty:item.qty+c.item_qty)
+			c.destroy		
+		end
+		redirect_to :back
 	end
 
 	def reloadvariables
@@ -44,6 +86,8 @@ class HomeController < ApplicationController
     	end
 		@user_cart_items = CartItem.where(cart_id: cart.id)
 
+		getCart
+		getAllItems
 		render 'app/views/homepage/index.html.erb'
 	end
 

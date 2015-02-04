@@ -21,6 +21,7 @@ class HomepageController < ApplicationController
 			product_cost = Item.find_by(id: @cart_items[i].item_id)
 			@total_price+= (@cart_items[i].quantity)
 		end
+		return @user_cart_items
 	end
 
 	def loadValues
