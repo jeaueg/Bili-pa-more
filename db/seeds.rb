@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-Items.create(name: 'Manifold Paradox', description: 'PA Arcana', price: 1499)
-Items.create(name: 'Fiery SF Shit', description: 'SF Arcana', price: 1600)
-Items.create(name: 'Totem of Deep Magma', description: 'ES flaming shit', price: 98)
-Items.create(name: 'Shit of the Bladekeeper', description: 'Jugg expensive shit', price: 500)
+Item.create(name: 'Manifold Paradox', description: 'PA Arcana', price: 1499)
+Item.create(name: 'Fiery SF Stuff', description: 'SF Arcana', price: 1600)
+Item.create(name: 'Totem of Deep Magma', description: 'ES flaming item', price: 98)
+Item.create(name: 'Shit of the Bladekeeper', description: 'Jugg expensive sword', price: 500)
