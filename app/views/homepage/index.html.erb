@@ -1,4 +1,85 @@
-<h1> Welcome to Bili pa more!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Fake Steam Market</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+		 <script>
+			  	function func(){
+			  		var itemDiv = $('#tempItem');
+			  		var name = itemDiv.data('name'), 
+			  			info = itemDiv.data('info'),
+			  			price = itemDiv.data('price');
+
+			  		console.log(name + " " + info + " "+price)
+			  	}
+			  </script>
+	<div class="container-fluid">
+		  
+		<div class="page-header">
+			
+			<h2> Item list </h2>
+		</div>
+		<div class="row">
+		<% @all_items.each do |t| %>
+			<div class="col-sm-4" id="tempItem" name="<%= t.name %>" info="<%= t.description %>" price ="<%= t.price %>">		
+				Name: <%= t.name %><br>
+				Info: <%= t.description %><br>
+				price: <%= t.price %><br>
+				<% if user_signed_in? %>
+				<br>
+				<%= form_tag url_for(:controller=>"home", :action => "addtocart" ),  :method => "post" do %>
+					
+					<%= hidden_field_tag :item_id,  t.id %>
+					<%= submit_tag 'Add to Cart',:onclick => "alert('added to cart')"  %> 
+				<% end %>
+				<%end %>
+			</div>
+		<% end %>
+		</div>
+			<ul class="pager">
+		    	<li><a href="#">Previous</a></li>
+		    	<li><a href="#">Next</a></li>
+	  		</ul>
+		</div>
+		<!--cart-->
+
+			  <!-- Button trigger modal -->
+			  <button class="btn btn-link" data-toggle="modal" data-target="#viewcart">
+			    View Cart
+			  </button>
+
+			  
+		 <!-- Modal -->
+		  <div class="modal fade" id="viewcart" tabindex="-1" role="dialog" aria-labelledby="mylabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="Title">Your Cart</h4>
+		        </div>
+		        <% @cart_items.each do |t| %>
+			        <div class="modal-body">
+			          Name: <%= t.id %><br>
+			          Quantity: <%= t.quantity %><br>
+			        </div>
+		        <% end %>
+		        	<div class="modal-body">
+			          Total: <%= @total_price %><br>
+			        </div>
+		        <div class="modal-footer">
+		        	<button type="button" class="btn btn-primary" data-dismiss="modal">Checkout</button>
+		          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+</body>
+</html>
 
 
- <%= render 'layouts/user_widget.rb' %>
+

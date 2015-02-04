@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>DShoppingCart</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+<html lang="en">
+<head>	
+	<title>Fake Steam Market</title>
+
+
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
-<p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+ 	<div class="banner-top">
+			<% if user_signed_in? %>
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				<%= current_user.email %> <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+				<li><a ="#" data-toggle="modal" data-target="#viewcart">View Cart</a></li>
+				<li><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></a></li>
+				</ul>
+				</div>
+				
+			
+				<!--
+			  <%= link_to 'Logout', destroy_user_session_path, :method => :delete %> -->
+			 
+			<% else %>
+			<div class="btn-group">
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				Login <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li>
+						<%- if controller_name != 'sessions' %>
+				  		<%= link_to 'Login', new_user_session_path %>
+				  		
+				  		<%else%> 
+				  		Login
+				  		<% end %> 
+				  	</li>
+					<li>
+						<%- if  controller_name != 'registrations' %>
+						<%= link_to 'Sign up', new_user_registration_path %>
+						<% else %>
+						Sign up
+						<% end %>
+					</li>
+				</ul>
+				</div>
+			  <div class="login">
+				</div>
+			<% end %>
+			<div class ="logo">
+				<%= image_tag("logo.jpg") %>
+			</div>
+			<!-- <h1 class="title"><%= link_to_unless_current("Stim", root_path) { "Stim" } %></h1> -->
+
+		</div>
+
+		 <!-- Modal -->
+		 <!--  <div class="modal fade" id="viewcart" tabindex="-1" role="dialog" aria-labelledby="mylabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="Title">Your Cart</h4>
+		        </div>
+
+		        <div class="modal-body">
+		          This is cart
+		        </div>
+		        
+		        <div class="modal-footer">
+		        	<button type="button" class="btn btn-primary" data-dismiss="modal">Checkout</button>
+		          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div> -->
+
 
   <%= yield %>
 
